@@ -5,65 +5,29 @@
 #include <sstream>
 #include <algorithm>
 #include <cstdlib>
+#include "StrUtils.h"
+#include "ConsoleUtils.h"
+#include "NaturalLangToGit.h"
+#include "HardCodedToGit.h"
 
-void runCommand(const std::string& cmd)
-{
-    std::cout << "> " << cmd << std::endl;
-    int result = std::system(cmd.c_str());
-    if (result != 0) 
-    {
-        std::cerr << "Command failed: " << cmd << std::endl;
-    }
-}
-
-std::string toLower(const std::string& str)
-{
-    std::string out = str;
-    std::transform(out.begin(), out.end(), out.begin(), ::tolower);
-    return out;
-}
-
-std::string getCommitMessage() 
-{
-    std::cout << "Enter a commit message: ";
-    std::string message;
-    std::getline(std::cin, message);
-    return message;
-}
-
-std::vector<std::string> parseCommand(const std::string& inputRaw)
-{
-    std::string input = toLower(inputRaw);
-    std::vector<std::string> commands;
-
-    if (input.find("help") != std::string::npos)
-    {
-        commands.push_back("git help");
-    }
-
-    return commands;
-}
+using namespace std;
 
 int main(int argc, char* argv[]) 
 {
     if (argc < 2) {
-        std::cerr << "Usage: relagit \"your plain english git command\"\n";
+        cerr << "Usage: relagit \"your plain english git command\"\n";
         return 1;
     }
     
-    std::string command = argv[1];
-    bool isPreview = false;
-    for (int i = 2; i < argc; i++)
-    {
-        std::string arg = toLower(argv[i]);
-        std::cout << arg << std::endl;
-        isPreview = (arg.find("-preview") != std::string::npos);
-    }
+    string command = argv[1];
 
+    HardCodedToGit processorImp;
+    NaturalLangToGit *processor = &processorImp;
 
-    std::vector<std::string> commands = parseCommand(command);
+    vector<string> commands = processor->extractCommands(command);
+    bool isPreview = processor->isRequestPreview(command);
 
-    for (const std::string& cmd : commands)
+    for (const string& cmd : commands)
     {
         if (!isPreview)
         {
@@ -71,7 +35,7 @@ int main(int argc, char* argv[])
         }
         else 
         {
-            std::cout << cmd << std::endl;
+            cout << cmd << endl;
         }
     }
 
