@@ -26,10 +26,11 @@ string SendRequest(const string& prompt) {
     string jsonData = R"({
         "model": "llama3",
         "stream": false,
-        "prompt": 
-    )";
-    jsonData += prompt;
-    jsonData += "\n}";
+        "system": "You are a Senior Developer and expert on Git. Respond with a semi-colon separated list of Git commands to accomplish the prompt. Provide the commands only, and no other context.",
+        "prompt": )";
+    jsonData.append('\"' + prompt + '\"' + "\n}");
+
+    cout << "Json Data: " << endl << jsonData << endl;
 
     curl = curl_easy_init();
 

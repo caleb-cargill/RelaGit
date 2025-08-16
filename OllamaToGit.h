@@ -5,6 +5,8 @@
 #include "NaturalLangToGit.h"
 #include "HttpClientUtils.h"
 #include "StrUtils.h"
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 using namespace std;
 
@@ -28,6 +30,12 @@ class OllamaToGit : public NaturalLangToGit {
             prompt = "Please give me the git commands to accomplish this: ";
             prompt += input;
             string response = SendRequest(prompt);
+
+
+            json j = json::parse(response);
+            cout << "Response: " << j["response"] << endl;
+            cout << "Context: " << j["context"] << endl;
+
             return response;
         }
 
