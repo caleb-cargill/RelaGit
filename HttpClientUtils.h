@@ -18,25 +18,16 @@ void CleanUp() {
     curl_global_cleanup();
 }
 
-string SendRequest(const string& prompt) {
+string SendRequest(const string& requestUrl, const string& body) {
     CURL* curl;
     CURLcode res;
     string readBuffer;
 
-    string jsonData = R"({
-        "model": "llama3",
-        "stream": false,
-        "system": "You are a Senior Developer and expert on Git. Respond with a semi-colon separated list of Git commands to accomplish the prompt. Provide the commands only, and no other context.",
-        "prompt": )";
-    jsonData.append('\"' + prompt + '\"' + "\n}");
-
-    cout << "Json Data: " << endl << jsonData << endl;
-
     curl = curl_easy_init();
 
     if (curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:11434/api/generate");
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
+        curl_easy_setopt(curl, CURLOPT_URL, requestUrl.c_str());
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
 
         struct curl_slist* headers = NULL;
         headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -48,8 +39,6 @@ string SendRequest(const string& prompt) {
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;            
-        } else {
-            cout << "Ollama response: " << readBuffer << endl;
         }
 
         curl_easy_cleanup(curl);

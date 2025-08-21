@@ -58,5 +58,3 @@ CTestTestfile.cmake
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-
-# Other

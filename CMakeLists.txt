@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Your executable
-add_executable(myapp
+add_executable(rgit
     RelaGit.cpp
     # add more .cpp files if needed
 )
@@ -33,7 +33,7 @@ Then re-run CMake with:
 endif()
 
 # Link libraries
-target_link_libraries(myapp
+target_link_libraries(rgit
     PRIVATE
         nlohmann_json::nlohmann_json
         CURL::libcurl
