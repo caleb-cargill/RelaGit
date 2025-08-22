@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     vector<string> commands = processor->extractCommands(command);
     bool isPreview = processor->isRequestPreview(command);
-    processor->runCommands(commands, isPreview);
+    processor->runCommands(commands, true);
 
     CleanUp();
 

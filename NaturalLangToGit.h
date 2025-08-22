@@ -17,7 +17,7 @@ class NaturalLangToGit {
                 }
                 else 
                 {
-                    cout << cmd << endl;
+                    cout << "\t" << cmd << endl;
                 }
             }
         }

@@ -15,13 +15,13 @@ class OllamaToGit : public NaturalLangToGit {
         const string requestUrl = "http://localhost:11434/api/generate";
     public: 
         vector<string> extractCommands(const string& input) {
-            promptOllama(input);
-            string cleanedInput = toLower(input);
+            string response = promptOllama(input);
+            stringstream ss(response);
+            string command;
             vector<string> commands;
 
-            if (cleanedInput.find("help") != string::npos)
-            {
-                commands.push_back("git help");
+            while (getline(ss, command, ';')) {
+                commands.push_back(trim(command));
             }
 
             return commands;
@@ -35,7 +35,7 @@ class OllamaToGit : public NaturalLangToGit {
             cout << "Response: " << j["response"] << endl;
             cout << "Context: " << j["context"] << endl;
 
-            return response;
+            return j["response"];
         }
 
         bool isRequestPreview(const string& input) {
