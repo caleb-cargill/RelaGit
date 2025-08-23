@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 
 
     if (argc < 2) {
-        cerr << "Usage: rgit \"your plain english git command\"\n";
+        cerr << "Usage: rgit \"your plain english git command\" or rgit -h for additional help\n";
         return 1;
     }
 
@@ -79,7 +79,13 @@ int main(int argc, char* argv[])
             string request;
             cin >> request;
             if (request == "exit") {
-                chatMode = false;
+                chatMode = false;                
+            } else {
+                if (request == "clear") {
+                    system("cls");
+                } else if (request == "new") {
+
+                }
             }
         }
     }
