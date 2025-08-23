@@ -20,6 +20,8 @@ using namespace std;
 
 void showMenu();
 
+void showChatOptions();
+
 int main(int argc, char* argv[]) 
 {
 
@@ -72,6 +74,14 @@ int main(int argc, char* argv[])
         processor->runCommands(commands, !runCommands);
     } else {
         cout << endl << "Entering Chat Mode" << endl;
+        while (chatMode) {
+            showChatOptions();
+            string request;
+            cin >> request;
+            if (request == "exit") {
+                chatMode = false;
+            }
+        }
     }
 
     CleanUp();
@@ -94,4 +104,14 @@ void showMenu() {
     cout << "To request rgit to run generated commands based on a natural language input:" << endl;
     cout << "\trgit run \"Your request\"";
     cout << endl << endl;
+}
+
+void showChatOptions() {
+    cout << "Enter a command or request:" << endl;
+    cout << "Commands: " << endl;
+    cout << "\texit\tExits the program" << endl;
+    cout << "\tclear\tClears the console output" << endl;
+    cout << "\tnew\tClears the chat context" << endl;
+    cout << "Request syntax: " << endl;
+    cout << "\t\"Your natural language request\"" << endl;
 }
