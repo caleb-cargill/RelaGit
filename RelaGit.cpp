@@ -25,15 +25,6 @@ void showChatOptions();
 int main(int argc, char* argv[]) 
 {
 
-    // Two modes
-    // 1) call exe with single prompt -> get commands back
-    // 2) call exe for extended session -> loop until exit to utilize context and perfect commands
-    // Additional Args to Implement
-    // - help
-    // - preview
-    // - clear context
-
-
     if (argc < 2) {
         cerr << "Usage: rgit \"your plain english git command\" or rgit -h for additional help\n";
         return 1;
@@ -42,10 +33,10 @@ int main(int argc, char* argv[])
     bool runCommands = false;
     bool requestHelp = false;
     bool chatMode = false;
+    string command = "";
 
     cout << endl;
     for (int i = 0; i < argc; i++) {
-        cout << argv[i] << endl;
         string arg = argv[i];
         if (arg == "run") {
             runCommands = true;
@@ -53,6 +44,8 @@ int main(int argc, char* argv[])
             requestHelp = true;
         } else if (arg == "chat") {
             chatMode = true;
+        } else if (isStringInQuotes(arg)) {
+            command = arg;
         }
     }
 
@@ -63,8 +56,6 @@ int main(int argc, char* argv[])
 
     Init();
     
-    string command = argv[1];
-
     OllamaToGit processorImp;
     NaturalLangToGit *processor = &processorImp;
 
