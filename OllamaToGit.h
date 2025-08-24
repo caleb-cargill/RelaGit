@@ -17,6 +17,7 @@ class OllamaToGit : public NaturalLangToGit {
     public: 
         vector<string> extractCommands(const string& input) {
             string response = promptOllama(input);
+
             stringstream ss(response);
             string command;
             vector<string> commands;
@@ -49,17 +50,19 @@ class OllamaToGit : public NaturalLangToGit {
         }
 
         string getRequestBody(const string& input) {
-            string prompt = "Please give me the commands to accomplish this: " + input;
+            string prompt = input;
             json j;
 
-            j["model"] = "llama3";
+            j["model"] = "codellama";
             j["stream"] = false;
-            j["system"] = "You are a Senior Developer. You are a keyboard warrior, you can accomplish anything via the command line. Respond with a semi-colon separated list of commands to accomplish the prompt. Provide the commands only, and no other context.";
+            j["system"] = "You are a Senior Developer. You are a keyboard warrior, you can accomplish anything via the command line. Respond with a semi-colon separated list of commands to accomplish the prompt. Provide the commands only, and no other context. Keep it simple, give commands to accomplish the request only, and nothing beyond that. Format as plain text. You are working on a Windows 10 machine, in Powershell. Current dependencies are limited to dotnet and git.";
             j["prompt"] = prompt;
 
-            if (!previousContext.empty()) {
-                j["context"] = previousContext;
-            }
+            // if (!previousContext.empty()) {
+            //     j["context"] = previousContext;
+            // }
+
+            j["context"] = nullptr;
             
             return j.dump();
         }

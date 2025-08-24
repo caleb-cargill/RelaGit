@@ -36,15 +36,16 @@ int main(int argc, char* argv[])
     string command = "";
 
     cout << endl;
-    for (int i = 0; i < argc; i++) {
+    for (int i = 0; i < argc; i++) {        
         string arg = argv[i];
+
         if (arg == "run") {
             runCommands = true;
         } else if (arg == "-help" || arg == "-h") {
             requestHelp = true;
         } else if (arg == "chat") {
             chatMode = true;
-        } else if (isStringInQuotes(arg)) {
+        } else {
             command = arg;
         }
     }
@@ -60,7 +61,7 @@ int main(int argc, char* argv[])
     NaturalLangToGit *processor = &processorImp;
 
     if (!chatMode) {
-        cout << endl << "Processing Request..." << endl;
+        cout << "Processing Request..." << endl;
         vector<string> commands = processor->extractCommands(command);
         processor->runCommands(commands, !runCommands);
     } else {
