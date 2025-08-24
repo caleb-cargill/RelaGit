@@ -25,11 +25,14 @@ class OllamaToGit : public NaturalLangToGit {
                 commands.push_back(trim(command));
             }
 
+            lastSetOfCommands = commands;
+
             return commands;
         }
 
         void clearMemory() {
             previousContext.clear();
+            lastSetOfCommands.clear();
         }
 
         string promptOllama(const string& input) {

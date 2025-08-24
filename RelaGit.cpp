@@ -74,8 +74,10 @@ int main(int argc, char* argv[])
         processor->runCommands(commands, !runCommands);
     } else {
         cout << endl << "Entering Chat Mode" << endl;
+        bool showOptions = true;
         while (chatMode) {
-            showChatOptions();
+            if (showOptions) showChatOptions();
+            showOptions = false;
             string request;
             getline(cin, request);
             if (request == "exit") {
@@ -83,11 +85,15 @@ int main(int argc, char* argv[])
             } else {
                 if (request == "clear") {
                     system("cls");
+                    showOptions = true;
                 } else if (request == "new") {
                     processor->clearMemory();
+                } else if (request == "run") {
+                    vector<string> commands = processor->getPreviousCommands();
+                    processor->runCommands(commands, false);
                 } else if (isStringInQuotes(request)) {
                     vector<string> commands = processor->extractCommands(request);
-                    processor->runCommands(commands, !runCommands);
+                    processor->runCommands(commands, true);
                 } else {
                     cout << "Input could not be processed." << endl;
                 }
@@ -123,6 +129,7 @@ void showChatOptions() {
     cout << "\texit\tExits the program" << endl;
     cout << "\tclear\tClears the console output" << endl;
     cout << "\tnew\tClears the chat context" << endl;
+    cout << "\trun\tRuns the last set of generated commands" << endl;
     cout << "Request syntax: " << endl;
     cout << "\t\"Your natural language request\"" << endl;
 }
