@@ -53,7 +53,7 @@ class OllamaToGit : public NaturalLangToGit {
             string prompt = input;
             json j;
 
-            j["model"] = "codellama";
+            j["model"] = "llama3";
             j["stream"] = false;
             j["system"] = "You are a Senior Developer. You are a keyboard warrior, you can accomplish anything via the command line. Respond with a semi-colon separated list of commands to accomplish the prompt. Provide the commands only, and no other context. Keep it simple, give commands to accomplish the request only, and nothing beyond that. Format as plain text. You are working on a Windows 10 machine, in Powershell. Current dependencies are limited to dotnet and git.";
             j["prompt"] = prompt;
