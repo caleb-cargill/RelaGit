@@ -19,9 +19,4 @@ class HardCodedToGit : public NaturalLangToGit {
 
             return commands;
         }
-
-        bool isRequestPreview(const string& input) {
-            string args = toLower(input);
-            return args.find("preview") != string::npos;
-        }
 };

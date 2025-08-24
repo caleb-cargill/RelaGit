@@ -6,9 +6,9 @@ using namespace std;
 
 class NaturalLangToGit {
     public:
-        virtual vector<string> extractCommands(const string& input) = 0;
+        virtual vector<string> extractCommands(const string& input) = 0;      
         
-        virtual bool isRequestPreview(const string& input) = 0;
+        virtual void clearMemory() = 0;
 
         void runCommands(vector<string> commands, bool isPreview) {
             if (isPreview) {
@@ -30,9 +30,8 @@ class NaturalLangToGit {
             }
         }
 
-        void processCommand(const string& command) {
+        void processCommand(const string& command, bool isPreview) {
             vector<string> commands = extractCommands(command);
-            bool isPreview = isRequestPreview(command);
             runCommands(commands, isPreview);
         }
 };

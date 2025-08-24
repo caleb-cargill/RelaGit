@@ -19,3 +19,9 @@ string trim(const string& str) {
     size_t last = str.find_last_not_of(" \t\n\r\f\v");
     return str.substr(first, last - first + 1);
 }
+
+bool isStringInQuotes(const string& str) {
+    if (str[0] != '\"') return false;
+    if (str[str.length() - 1] != '\"') return false;
+    return true;
+}

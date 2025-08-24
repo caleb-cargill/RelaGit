@@ -28,6 +28,10 @@ class OllamaToGit : public NaturalLangToGit {
             return commands;
         }
 
+        void clearMemory() {
+            previousContext.clear();
+        }
+
         string promptOllama(const string& input) {
             string body = getRequestBody(input);        
             string response = SendRequest(requestUrl, body);
@@ -39,11 +43,6 @@ class OllamaToGit : public NaturalLangToGit {
             }
 
             return j["response"];
-        }
-
-        bool isRequestPreview(const string& input) {
-            string args = toLower(input);
-            return args.find("preview") != string::npos;
         }
 
         string getRequestBody(const string& input) {

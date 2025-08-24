@@ -77,14 +77,19 @@ int main(int argc, char* argv[])
         while (chatMode) {
             showChatOptions();
             string request;
-            cin >> request;
+            getline(cin, request);
             if (request == "exit") {
                 chatMode = false;                
             } else {
                 if (request == "clear") {
                     system("cls");
                 } else if (request == "new") {
-
+                    processor->clearMemory();
+                } else if (isStringInQuotes(request)) {
+                    vector<string> commands = processor->extractCommands(request);
+                    processor->runCommands(commands, !runCommands);
+                } else {
+                    cout << "Input could not be processed." << endl;
                 }
             }
         }
